@@ -1,0 +1,6 @@
+streamlit
+llama-index==0.10.24
+openai
+python-dotenv
+docx2txt
+PyMuPDF
