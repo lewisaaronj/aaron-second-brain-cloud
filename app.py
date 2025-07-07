@@ -1,15 +1,13 @@
 import streamlit as st
 from llama_index.core import SimpleDirectoryReader, VectorStoreIndex
-from llama_index.core.settings import Settings
-from llama_index.embeddings.openai import OpenAIEmbedding
-from llama_index.llms.openai import OpenAI
-import os
+from llama_index.embeddings.huggingface import HuggingFaceEmbedding
 
 # Only initialize index when requested
 @st.cache_resource
 def load_index():
     docs = SimpleDirectoryReader("second_brain_files").load_data()
-    return VectorStoreIndex.from_documents(docs)
+    embed_model = HuggingFaceEmbedding(model_name="sentence-transformers/all-MiniLM-L6-v2")
+    return VectorStoreIndex.from_documents(docs, embed_model=embed_model)
 
 # UI
 st.set_page_config(page_title="AaronOS — Second Brain", layout="wide")
